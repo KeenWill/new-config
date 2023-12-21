@@ -17,6 +17,8 @@ with pkgs; [
   sqlite
   wget
   zip
+  git-lfs
+  git-annex
 
   # Encryption and security tools
   age

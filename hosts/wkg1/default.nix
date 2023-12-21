@@ -296,5 +296,60 @@ let user = "williamgoeller";
     inetutils
   ];
 
+  services.hydra = {
+      enable = true;  
+      hydraURL = lib.mkOptionDefault "https://${hostName}";
+      notificationSender = "hydra@${hostName}";
+      useSubstitutes = true;
+      smtpHost = "localhost";
+      extraConfig = ''
+        store_uri = ${config.simple-hydra.store_uri}
+      ''; 
+    };
+
+        services.nginx = lib.mkIf config.simple-hydra.useNginx {
+      enable = true;
+      recommendedProxySettings = true;
+      virtualHosts."${hostName}" = {
+        forceSSL = true;
+        enableACME = true;
+        locations."/".proxyPass = "http://127.0.0.1:${toString config.services.hydra.port}";
+      };
+    };
+
+    systemd.services.hydra-manual-setup = {
+      description = "Initial setup for Hydra";
+      serviceConfig.Type = "oneshot";
+      serviceConfig.RemainAfterExit = true;
+      wantedBy = [ "multi-user.target" ];
+      requires = [ "hydra-init.service" ];
+      after = [ "hydra-init.service" ];
+      environment = builtins.removeAttrs (config.systemd.services.hydra-init.environment) ["PATH"];
+      script = ''
+        if [ ! -e ~hydra/.setup-is-complete ]; then
+          # create signing keys
+          /run/current-system/sw/bin/install -d -m 551 /etc/nix/${hostName}
+          /run/current-system/sw/bin/nix-store --generate-binary-cache-key ${hostName} /etc/nix/${hostName}/secret /etc/nix/${hostName}/public
+          /run/current-system/sw/bin/chown -R hydra:hydra /etc/nix/${hostName}
+          /run/current-system/sw/bin/chmod 440 /etc/nix/${hostName}/secret
+          /run/current-system/sw/bin/chmod 444 /etc/nix/${hostName}/public
+          # create cache
+          /run/current-system/sw/bin/install -d -m 755 /var/lib/hydra/cache
+          /run/current-system/sw/bin/chown -R hydra-queue-runner:hydra /var/lib/hydra/cache
+          # done
+          touch ~hydra/.setup-is-complete
+        fi
+      '';
+    };
+
+    nix.buildMachines = [
+      {
+        hostName = "localhost";
+        systems = ["x86_64-linux" "i686-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin"];
+        maxJobs = config.simple-hydra.localBuilder.maxJobs;
+        supportedFeatures = config.simple-hydra.localBuilder.supportedFeatures;
+      }
+    ];
+
   system.stateVersion = "21.05"; # Don't change this
 }

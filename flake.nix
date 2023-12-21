@@ -28,13 +28,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     secrets = {
-      url = "git+ssh://git@github.com/dustinlyons/nix-secrets.git";
+      url = "git+ssh://git@github.com/KeenWill/nix-secrets.git";
       flake = false;
     };
   };
   outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, disko, agenix, secrets } @inputs:
     let
-      user = "%USER%";
+      user = "williamgoeller";
       linuxSystems = [ "x86_64-linux" "aarch64-linux" ];
       darwinSystems = [ "aarch64-darwin" ];
       forAllSystems = f: nixpkgs.lib.genAttrs (linuxSystems ++ darwinSystems) f;
@@ -77,7 +77,7 @@
       devShells = forAllSystems devShell;
       apps = nixpkgs.lib.genAttrs linuxSystems mkLinuxApps // nixpkgs.lib.genAttrs darwinSystems mkDarwinApps;
 
-      darwinConfigurations = let user = "%USER%"; in {
+      darwinConfigurations = let user = "williamgoeller"; in {
         macos = darwin.lib.darwinSystem {
           system = "aarch64-darwin";
           specialArgs = inputs;

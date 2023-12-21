@@ -1,7 +1,7 @@
 { config, pkgs, lib, home-manager, ... }:
 
 let
-  user = "%USER%";
+  user = "williamgoeller";
   # Define the content of your file as a derivation
   myEmacsLauncher = pkgs.writeScript "emacs-launcher.command" ''
     #!/bin/sh
@@ -13,6 +13,8 @@ in
 {
   imports = [
    ./dock
+   ./homebrew.nix
+   ./osx-defaults.nix
   ];
 
   # It me
@@ -21,23 +23,6 @@ in
     home = "/Users/${user}";
     isHidden = false;
     shell = pkgs.zsh;
-  };
-
-  homebrew = {
-    enable = true;
-    casks = pkgs.callPackage ./casks.nix {};
-
-    # These app IDs are from using the mas CLI app
-    # mas = mac app store
-    # https://github.com/mas-cli/mas
-    #
-    # $ nix shell nixpkgs#mas
-    # $ mas search <app name>
-    #
-    masApps = {
-      "1password" = 1333542190;
-      "wireguard" = 1451685025;
-    };
   };
 
   # Enable home-manager

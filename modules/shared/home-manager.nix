@@ -1,8 +1,8 @@
 { config, pkgs, lib, ... }:
 
-let name = "%NAME%";
-    user = "%USER%";
-    email = "%EMAIL%"; in
+let name = "William Goeller";
+    user = "williamgoeller";
+    email = "william@williamgoeller.com"; in
 {
   # Shared shell configuration
   zsh = {
@@ -78,7 +78,7 @@ let name = "%NAME%";
 	    editor = "vim";
         autocrlf = "input";
       };
-      commit.gpgsign = true;
+      # commit.gpgsign = true;
       pull.rebase = true;
       rebase.autoStash = true;
     };
