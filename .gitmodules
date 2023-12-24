@@ -1,0 +1,6 @@
+[submodule "nix-secrets"]
+	path = nix-secrets
+	url = git@github.com:KeenWill/nix-secrets.git
+[submodule "agenix-rekey"]
+	path = agenix-rekey
+	url = git@github.com:KeenWill/agenix-rekey.git

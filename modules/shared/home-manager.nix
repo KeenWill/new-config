@@ -4,6 +4,7 @@ let name = "William Goeller";
     user = "williamgoeller";
     email = "william@williamgoeller.com"; in
 {
+
   # Shared shell configuration
   zsh = {
     enable = true;

@@ -15,6 +15,7 @@ in
    ./dock
    ./homebrew.nix
    ./osx-defaults.nix
+   ./secrets.nix
   ];
 
   # It me
@@ -42,33 +43,32 @@ in
       };
       programs = {} // import ../shared/home-manager.nix { inherit config pkgs lib; };
 
-      # Marked broken Oct 20, 2022 check later to remove this
-      # https://github.com/nix-community/home-manager/issues/3344
-      manual.manpages.enable = false;
+      manual.manpages.enable = true;
     };
   };
+
+  
 
   # Fully declarative dock using the latest from Nix Store
   local = { 
     dock = {
       enable = true;
       entries = [
-        { path = "/System/Applications/Finder.app/"; }
         { path = "/System/Applications/Launchpad.app/"; }
-        { path = "/System/Applications/Safari.app/"; }
+        { path = "/Applications/Safari.app/"; }
         { path = "/System/Applications/Messages.app/"; }
         { path = "/System/Applications/Mail.app/"; }
         { path = "/System/Applications/Maps.app/"; }
         { path = "/System/Applications/Calendar.app/"; }
         { path = "/System/Applications/Notes.app/"; }
-        { path = "/System/Applications/Slack.app/"; }
+        { path = "/Applications/Slack.app/"; }
         # { path = "${pkgs.alacritty}/Applications/Alacritty.app/"; }
         { path = "/System/Applications/System Settings.app/"; }
-        { path = "/System/Applications/Visual Studio Code.app/"; }
-        { path = "/System/Applications/AutoCAD 2023.app/"; }
-        { path = "/System/Applications/Xcode.app/"; }
-        { path = "/System/Applications/iTerm.app/"; }
-        { path = "/System/Applications/Spotify.app/"; }
+        { path = "/Applications/Visual Studio Code.app/"; }
+        { path = "/Applications/AutoCAD 2023.app/"; }
+        { path = "/Applications/Xcode.app/"; }
+        { path = "/Applications/iTerm.app/"; }
+        { path = "/Applications/Spotify.app/"; }
         {
           path = toString myEmacsLauncher;
           section = "others";
@@ -79,9 +79,9 @@ in
           options = "--sort name --view grid --display folder";
         }
         {
-          path = "${config.users.users.${user}.home}/.local/share/downloads";
+          path = "${config.users.users.${user}.home}/Downloads/";
           section = "others";
-          options = "--sort name --view grid --display stack";
+          options = "--sort dateadded --view grid --display folder";
         }
       ];
     };

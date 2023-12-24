@@ -1,15 +1,13 @@
-{ agenix, config, pkgs, ... }:
+{ inputs, age, reykey, agenix, config, pkgs, home, ... }:
 
 let user = "williamgoeller"; in
 
 {
-
   imports = [
     ../../modules/darwin/secrets.nix
     ../../modules/darwin/home-manager.nix
     ../../modules/shared
     ../../modules/shared/cachix
-     agenix.darwinModules.default
   ];
 
   # Auto upgrade nix package and the daemon service.
@@ -57,6 +55,38 @@ let user = "williamgoeller"; in
     StandardOutPath = "/tmp/emacs.out.log";
   };
 
+  networking = {
+    hostName = "wkg-mbp";
+  };
+  
+  age.rekey = {
+    hostPubkey = ./id_ed25519.pub;
+    masterIdentities = [ "${inputs.self}/nix-secrets/identities/yubikey-1.txt" "${inputs.self}/nix-secrets/identities/yubikey-2.txt" ];
+    extraEncryptionPubkeys = [ ];
+  }; 
+
+  
+
+  age.secrets.id_ed25519_old = {
+    rekeyFile = ./id_ed25519_old.age;
+    path = "~/.ssh/id_ed25519_old";
+  };
+
+
+
+  # age.secrets = {
+  #   id_ed25519_old = {
+      
+      # rekeyFile = ./id_ed25519_old.age;
+      # file = config.age.secrets.secret1.path;
+      # path = "/Users/${user}/.ssh/id_ed25519_old";
+      # mode = "600";
+  #   };
+  # };
+  
+  # age.secrets.id_ed25519_old.rekeyFile = ./id_ed25519_old.age;
+
+  
   # system = {
     # stateVersion = 4;
 

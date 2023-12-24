@@ -20,6 +20,8 @@ with pkgs; [
   git-lfs
   git-annex
 
+  jp2a
+
   # Encryption and security tools
   age
   age-plugin-yubikey

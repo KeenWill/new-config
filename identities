@@ -1,0 +1,18 @@
+#       Serial: 19376923, Slot: 1
+#         Name: MAIN_IDENTITY2
+#      Created: Thu, 21 Dec 2023 22:33:53 +0000
+#   PIN policy: Once   (A PIN is required once per session, if set)
+# Touch policy: Always (A physical touch is required for every decryption)
+#    Recipient: age1yubikey1q08v0x4uruaeze9pwajujv7djtn23p4st5yjdeyaha4vk3lpcl96w7e3xrn
+AGE-PLUGIN-YUBIKEY-1RW4JWQVZCTQUJ8GKSXMTU
+
+
+#       Serial: 19236427, Slot: 1
+#         Name: MAIN_IDENTITY
+#      Created: Thu, 21 Dec 2023 22:30:57 +0000
+#   PIN policy: Once   (A PIN is required once per session, if set)
+# Touch policy: Always (A physical touch is required for every decryption)
+#    Recipient: age1yubikey1qtejedzsfrd7m0mj96hnmnzescvm9nan87fxgc4h6z2l3zuyxsnqut4gmch
+AGE-PLUGIN-YUBIKEY-1FWRZ2QVZL708S7QAFEPVU
+
+
