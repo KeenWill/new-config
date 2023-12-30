@@ -40,6 +40,17 @@ let user = "williamgoeller";
       fsType = "zfs";
     };
 
+  fileSystems."/export/tank" = {
+    device = "/tank";
+    options = [ "bind" ];
+  };
+
+  services.nfs.server.exports = ''
+    # /export         192.168.1.10(rw,fsid=0,no_subtree_check) 192.168.1.15(rw,fsid=0,no_subtree_check)
+    /export/tank    100.0.0.0/8(rw,sync,no_subtree_check)
+  '';
+
+
   # services.zfs.enable = true;
   services.zfs.autoScrub.enable = true;
   services.nfs.server.enable = true;
