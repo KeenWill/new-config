@@ -288,7 +288,7 @@ let user = "williamgoeller";
  # Add docker daemon
   virtualisation.docker.enable = true;
   virtualisation.podman.enable = true;
-  virtualisation.podman.dockerSocket.enable = true;
+  # virtualisation.podman.dockerSocket.enable = true;
   virtualisation.podman.defaultNetwork.settings.dns_enabled = true;
   # virtualisation.docker.logDriver = "json-file";
 
