@@ -19,7 +19,7 @@ in
   homebrew.onActivation.extraFlags = [ "--force" ];
 
   homebrew.taps = [
-    # "homebrew/cask"
+    "homebrew/cask"
     # "homebrew/cask-drivers"
     # "homebrew/cask-fonts"
     # "homebrew/cask-versions"
@@ -79,7 +79,7 @@ in
     # "adoptopenjdk/openjdk/adoptopenjdk15"
     # "adoptopenjdk/openjdk/adoptopenjdk8"
     "android-platform-tools"
-    "android-sdk"
+    # "android-sdk"
     "android-studio"
     "anki"
     "apparency"
@@ -153,7 +153,7 @@ in
     "quicklookase"
     "raindropio"
     "raycast"
-    "sequel-pro"
+    # "sequel-pro"
     "signal"
     "skype"
     "slack"

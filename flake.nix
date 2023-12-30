@@ -1,7 +1,7 @@
 {
   description = "Starter Configuration for MacOS and NixOS";
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    # nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     agenix.url = "github:ryantm/agenix";
     agenix-rekey = {
       url = "github:KeenWill/agenix-rekey";
@@ -35,8 +35,12 @@
       url = "git+ssh://git@github.com/KeenWill/nix-secrets.git";
       flake = false;
     };
+    nixos-generators = {
+      url = "github:nix-community/nixos-generators";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
-  outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, disko, agenix, agenix-rekey, secrets } @inputs:
+  outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, nixos-generators, disko, agenix, agenix-rekey, secrets } @inputs:
     let
       user = "williamgoeller";
       linuxSystems = [ "x86_64-linux" "aarch64-linux" ];
@@ -97,7 +101,6 @@
         macos = darwin.lib.darwinSystem {
           system = "aarch64-darwin";
           specialArgs = inputs;
-          inputs = inputs;
           modules = [
             home-manager.darwinModules.home-manager
             nix-homebrew.darwinModules.nix-homebrew
@@ -127,6 +130,8 @@
         modules = [
           disko.nixosModules.disko
           agenix.nixosModules.default
+          agenix-rekey.nixosModules.default
+          nixos-generators.nixosModules.all-formats
           home-manager.nixosModules.home-manager {
             home-manager = {
               useGlobalPkgs = true;
@@ -137,5 +142,81 @@
           ./hosts/nixos
         ];
      });
+
+    colmena = {
+      meta = {
+        nixpkgs = import nixpkgs {
+          system = "x86_64-linux";
+          overlays = [];
+        };
+      };
+
+      # host-a = { name, nodes, pkgs, ... }: {
+      #   boot.isContainer = true;
+      #   time.timeZone = nodes.host-b.config.time.timeZone;
+      # };
+      wkg1 = {
+        deployment = {
+          targetHost = "100.122.17.47";
+          # targetPort = 1234;
+          targetUser = "williamgoeller";
+          buildOnTarget = true;
+        };
+        # boot.isContainer = true;
+        time.timeZone = "America/New_York";
+      };
+    };
+
+    packages.aarch64-linux = {
+      vmware = nixos-generators.nixosGenerate {
+        system = "aarch64-linux";
+        modules = self.nixosConfigurations."aarch64-linux"._module;
+        format = "vmware";
+        
+        # optional arguments:
+        # explicit nixpkgs and lib:
+        # pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        # lib = nixpkgs.legacyPackages.x86_64-linux.lib;
+        # additional arguments to pass to modules:
+        # specialArgs = { myExtraArg = "foobar"; };
+        
+        # you can also define your own custom formats
+        # customFormats = { "myFormat" = <myFormatModule>; ... };
+        # format = "myFormat";
+      };
+      vbox = nixos-generators.nixosGenerate {
+        system = "aarch64-linux";
+        modules = self.nixosConfigurations."aarch64-linux"._module;
+        format = "virtualbox";
+      };
+
+      iso = nixos-generators.nixosGenerate {
+        system = "aarch64-linux";
+        # modules = self.nixosConfigurations."aarch64-linux"._module;
+        specialArgs = inputs;
+        # nixpkgs.localSystem ="aarch64-darwin"; 
+        modules = [
+          disko.nixosModules.disko
+          agenix.nixosModules.default
+          agenix-rekey.nixosModules.default
+          nixos-generators.nixosModules.all-formats
+          home-manager.nixosModules.home-manager {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.${user} = import ./modules/nixos/home-manager.nix;
+            };
+          }
+          # { nixpkgs = import nixpkgs { localSystem = "aarch64-darwin"; crossSystem = "aarch64-linux"; }; }
+          ({ pkgs, ... }: {
+            # nixpkgs.localSystem = "aarch64-darwin";
+            # nixpkgs.crossSystem = { config = "aarch64-linux"; };
+            nixpkgs.localSystem = { config = "aarch64-darwin"; };
+          })
+          ./hosts/nixos
+        ];
+        format = "iso";
+      };
+    };
   };
 }

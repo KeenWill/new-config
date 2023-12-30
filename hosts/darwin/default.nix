@@ -1,4 +1,4 @@
-{ inputs, age, reykey, agenix, config, pkgs, home, ... }:
+{ specialArgs, age, reykey, agenix, config, pkgs, home, ... }:
 
 let user = "williamgoeller"; in
 
@@ -36,6 +36,9 @@ let user = "williamgoeller"; in
 
   # Load configuration that is shared across systems
   environment.systemPackages = with pkgs; [
+    vim
+    curl
+    gitMinimal
     emacs-unstable
     agenix.packages."${pkgs.system}".default
   ] ++ (import ../../modules/shared/packages.nix { inherit pkgs; });
@@ -61,16 +64,16 @@ let user = "williamgoeller"; in
   
   age.rekey = {
     hostPubkey = ./id_ed25519.pub;
-    masterIdentities = [ "${inputs.self}/nix-secrets/identities/yubikey-1.txt" "${inputs.self}/nix-secrets/identities/yubikey-2.txt" ];
+    masterIdentities = [ "${specialArgs.self}/nix-secrets/identities/yubikey-1.age" "${specialArgs.self}/nix-secrets/identities/yubikey-2.age" ];
     extraEncryptionPubkeys = [ ];
   }; 
 
   
 
-  age.secrets.id_ed25519_old = {
-    rekeyFile = ./id_ed25519_old.age;
-    path = "~/.ssh/id_ed25519_old";
-  };
+  # age.secrets.id_ed25519_old = {
+  #   rekeyFile = ./id_ed25519_old.age;
+  #   path = "~/.ssh/id_ed25519_old";
+  # };
 
 
 

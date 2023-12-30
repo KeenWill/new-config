@@ -1,40 +1,58 @@
-{ config, inputs, pkgs, agenix, ... }:
+{ lib, specialArgs, config, inputs, pkgs, agenix, ... }:
 
 let user = "williamgoeller";
-    keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOk8iAnIaa1deoc7jw8YACPNVka1ZFJxhnU4G74TmS+p" ]; in
+    keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFVrWZkf6wERr0iwo4/LB2If1etVtlJRS6J3+yXdNM/a william@williamgoeller.com" ]; in
 {
   imports = [
     ../../modules/nixos/secrets.nix
     ../../modules/nixos/disk-config.nix
     ../../modules/shared
     ../../modules/shared/cachix
-    agenix.nixosModules.default
+
   ];
 
   # Use the systemd-boot EFI boot loader.
   boot = {
     loader = {
-      systemd-boot = {
+      # systemd-boot = {
+      #   enable = true;
+      #   configurationLimit = 42;
+      # };
+      grub = {
         enable = true;
-        configurationLimit = 42;
+        efiSupport = true;
+        efiInstallAsRemovable = true;
       };
-      efi.canTouchEfiVariables = true;
+      # efi.canTouchEfiVariables = true;
     };
-    initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
+    initrd.availableKernelModules = [ "ahci" "xhci_pci" "ehci_pci" "megaraid_sas" "nvme" "sd_mod" ];
+    initrd.kernelModules = [ "dm-snapshot" ];
     kernelPackages = pkgs.linuxPackages_latest;
-    kernelModules = [ "uinput" ];
+    kernelModules = [ "kvm-intel" ];
+    zfs.extraPools = [ "tank" ];
   };
 
   # Set your time zone.
   time.timeZone = "America/New_York";
 
+  fileSystems."/tank" =
+    { device = "tank";
+      fsType = "zfs";
+    };
+
+  # services.zfs.enable = true;
+  services.zfs.autoScrub.enable = true;
+  services.nfs.server.enable = true;
+
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
   networking = {
-    hostName = "%HOST%"; # Define your hostname.
-    useDHCP = false;
-    interfaces."%INTERFACE%".useDHCP = true;
+    hostName = "wkg1"; # Define your hostname.
+    hostId = "0005f5a5";
+    useDHCP = true;
+
+    # interfaces."%INTERFACE%".useDHCP = true;
   };
 
   # Turn on flag for proprietary software
@@ -57,6 +75,12 @@ let user = "williamgoeller";
     # My shell
     zsh.enable = true;
   };
+
+  age.rekey = {
+    hostPubkey = ./id_ed25519.pub;
+    masterIdentities = [ "${specialArgs.self}/nix-secrets/identities/yubikey-1.age" "${specialArgs.self}/nix-secrets/identities/yubikey-2.age" ];
+    extraEncryptionPubkeys = [ ];
+  }; 
 
   services = {
     xserver = {
@@ -242,6 +266,8 @@ let user = "williamgoeller";
 
     # Crypto wallet support
     ledger.enable = true;
+    
+    cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   };
 
 
@@ -291,7 +317,7 @@ let user = "williamgoeller";
   ];
 
   environment.systemPackages = with pkgs; [
-    agenix.packages."${pkgs.system}".default # "x86_64-linux"
+    # agenix.packages."${pkgs.system}".default # "x86_64-linux"
     gitAndTools.gitFull
     inetutils
   ];
