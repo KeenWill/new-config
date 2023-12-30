@@ -1,5 +1,11 @@
 { lib, pkgs, ... }: 
-let root = "/tank/htpc"; in
+let 
+    root = "/tank/htpc";
+    tz = "America/New_York";
+    
+    puid=1000;
+    pgid=100; 
+in
 {
   config.project.name = "htpc-download-box";
 #   config.networks = {
