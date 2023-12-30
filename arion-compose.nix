@@ -89,7 +89,7 @@ in
             "/etc/localtime:/etc/localtime:ro"
             "${root}/config/sonarr:/config" # config files
             "${root}/complete/tv:/tv" # tv shows folder
-            "${ROOT}/downloads:/downloads" # download folder
+            "${root}/downloads:/downloads" # download folder
         ];
         network_mode = "host";
       };
