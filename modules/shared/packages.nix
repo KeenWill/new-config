@@ -20,7 +20,6 @@ with pkgs; [
   git-lfs
   git-annex
 
-  tailscale
   jp2a
   rage
   colmena

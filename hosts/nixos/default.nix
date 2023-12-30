@@ -44,6 +44,9 @@ let user = "williamgoeller";
   services.zfs.autoScrub.enable = true;
   services.nfs.server.enable = true;
 
+
+  services.tailscale.enable = true;
+
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
@@ -320,6 +323,7 @@ let user = "williamgoeller";
     # agenix.packages."${pkgs.system}".default # "x86_64-linux"
     gitAndTools.gitFull
     inetutils
+    tailscale
   ];
 
   system.stateVersion = "21.05"; # Don't change this
