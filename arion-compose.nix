@@ -8,17 +8,17 @@ let
 in
 {
   config.project.name = "htpc-download-box";
-#   config.networks = {
-#     traefik-custom = {
-#       name = "traefik-custom";
-#       ipam = {
-#         config = [{
-#           subnet = "172.32.0.0/16";
-#           gateway = "172.32.0.1";
-#         }];
-#       };
-#     };
-#   };
+  config.networks = {
+    htpc = {
+      name = "htpc";
+      ipam = {
+        config = [{
+          subnet = "172.32.100.0/24";
+          gateway = "172.32.100.1";
+        }];
+      };
+    };
+  };
   config.services = {
     deluge = {
       service = {
@@ -40,7 +40,7 @@ in
             "6881:6881/udp"
             "58846:58846"
         ];
-        network_mode = "host";
+        networks = ["htpc"];
       };
     };
 
@@ -60,7 +60,7 @@ in
             "${root}/config/jackett:/config" # config files
         ];
         ports = [ "9117:9117" ];
-        network_mode = "host";
+        networks = ["htpc"];
       };
     };
 
@@ -79,7 +79,7 @@ in
             "${root}/config/nzbget:/config" # config files
         ];
         ports = [ "6789:6789" ];
-        network_mode = "host";
+        networks = ["htpc"];
       };
     };
 
@@ -103,7 +103,7 @@ in
             "8989:8989"
             "8112:8112" 
         ];
-        network_mode = "host";
+        networks = ["htpc"];
       };
     };
 
@@ -124,7 +124,7 @@ in
             "${root}/downloads:/downloads" # download folder
         ];
         ports = [ "7878:7878" ];
-        network_mode = "host";
+        networks = ["htpc"];
       };
     };
 
@@ -153,7 +153,7 @@ in
             "32413:32413/udp"
             "32414:32414/udp"
         ];
-        network_mode = "host";
+        networks = ["htpc"];
       };
     };
 
@@ -174,7 +174,7 @@ in
             "${root}/complete/tv:/tv" # tv folder
         ];
         ports = [ "6767:6767" ];
-        network_mode = "host";
+        networks = ["htpc"];
       };
     };
   };
