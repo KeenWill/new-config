@@ -99,7 +99,10 @@ in
             "${root}/complete/tv:/tv" # tv shows folder
             "${root}/downloads:/downloads" # download folder
         ];
-        ports = [ "8989:8989" ];
+        ports = [ 
+            "8989:8989"
+            "8112:8112" 
+        ];
         network_mode = "host";
       };
     };
