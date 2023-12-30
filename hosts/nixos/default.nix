@@ -289,7 +289,7 @@ let user = "williamgoeller";
   virtualisation.docker.enable = true;
   virtualisation.podman.enable = true;
   virtualisation.podman.dockerSocket.enable = true;
-  virtualisation.podman.defaultNetwork.dnsname.enable = true;
+  virtualisation.podman.defaultNetwork.settings.dns_enabled = true;
   # virtualisation.docker.logDriver = "json-file";
 
   # It's me, it's you, it's everyone
