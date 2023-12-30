@@ -34,6 +34,12 @@ in
             "${root}/downloads:/downloads" # downloads folder
             "${root}/config/deluge:/config" # config files
         ];
+        ports = [
+            "8112:8112"
+            "6881:6881"
+            "6881:6881/udp"
+            "58846:58846"
+        ];
         network_mode = "host";
       };
     };
@@ -53,6 +59,7 @@ in
             "${root}/downloads/torrent-blackhole:/downloads" # place where to put .torrent files for manual download
             "${root}/config/jackett:/config" # config files
         ];
+        ports = [ "9117:9117" ];
         network_mode = "host";
       };
     };
@@ -71,6 +78,7 @@ in
             "${root}/downloads/downloads" # download folder
             "${root}/config/nzbget:/config" # config files
         ];
+        ports = [ "6789:6789" ];
         network_mode = "host";
       };
     };
@@ -91,6 +99,7 @@ in
             "${root}/complete/tv:/tv" # tv shows folder
             "${root}/downloads:/downloads" # download folder
         ];
+        ports = [ "8989:8989" ];
         network_mode = "host";
       };
     };
@@ -111,6 +120,7 @@ in
             "${root}/complete/movies:/movies" # movies folder
             "${root}/downloads:/downloads" # download folder
         ];
+        ports = [ "7878:7878" ];
         network_mode = "host";
       };
     };
@@ -129,6 +139,16 @@ in
             "${root}/config/plex/db:/config" # plex database
             "${root}/config/plex/transcode:/transcode" # temp transcoded files
             "${root}/complete:/data" # media library
+        ];
+        ports = [
+            "32400:32400/tcp"
+            "8324:8324/tcp"
+            "32469:32469/tcp"
+            "1900:1900/udp"
+            "32410:32410/udp"
+            "32412:32412/udp"
+            "32413:32413/udp"
+            "32414:32414/udp"
         ];
         network_mode = "host";
       };
@@ -150,6 +170,7 @@ in
             "${root}/complete/movies:/movies" # movies shows folder
             "${root}/complete/tv:/tv" # tv folder
         ];
+        ports = [ "6767:6767" ];
         network_mode = "host";
       };
     };
