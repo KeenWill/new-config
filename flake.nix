@@ -132,6 +132,7 @@
           agenix.nixosModules.default
           agenix-rekey.nixosModules.default
           nixos-generators.nixosModules.all-formats
+          arion.nixosModules.arion
           home-manager.nixosModules.home-manager {
             home-manager = {
               useGlobalPkgs = true;

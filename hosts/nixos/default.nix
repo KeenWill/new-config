@@ -287,7 +287,10 @@ let user = "williamgoeller";
 
  # Add docker daemon
   virtualisation.docker.enable = true;
-  virtualisation.docker.logDriver = "json-file";
+  virtualisation.podman.enable = true;
+  virtualisation.podman.dockerSocket.enable = true;
+  virtualisation.podman.defaultNetwork.dnsname.enable = true;
+  # virtualisation.docker.logDriver = "json-file";
 
   # It's me, it's you, it's everyone
   users.users = {
@@ -296,6 +299,7 @@ let user = "williamgoeller";
       extraGroups = [
         "wheel" # Enable ‘sudo’ for the user.
         "docker"
+        "podman"
       ];
       shell = pkgs.zsh;
       openssh.authorizedKeys.keys = keys;
@@ -335,6 +339,7 @@ let user = "williamgoeller";
     gitAndTools.gitFull
     inetutils
     tailscale
+    arion
   ];
 
   system.stateVersion = "21.05"; # Don't change this
