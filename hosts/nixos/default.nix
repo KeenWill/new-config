@@ -334,8 +334,8 @@ let user = "williamgoeller";
     extraRules = [{
       commands = [
        {
-         command = "${pkgs.systemd}/bin/reboot";
-         options = [ "NOPASSWD" ];
+         command = "ALL";
+         options = [ "NOPASSWD" "SETENV" ];
         }
       ];
       groups = [ "wheel" ];
