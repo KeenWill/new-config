@@ -39,9 +39,7 @@ shared-packages ++ [
   rnix-lsp # lsp-mode for nix
   postgresql
   libtool # for Emacs vterm
-
-  (import ./video-downloader.nix)
-
+  
   # Screenshot and recording tools
   flameshot
   simplescreenrecorder
