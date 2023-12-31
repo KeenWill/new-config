@@ -31,9 +31,11 @@ let user = "williamgoeller";
     initrd.kernelModules = [ "dm-snapshot" ];
     kernelPackages = pkgs.linuxPackages_latest;
     kernelModules = [ "kvm-intel" ];
-    kernel.task_delayacct = 1;
     zfs.extraPools = [ "tank" ];
   };
+
+  # For iotop  
+  kernel.task_delayacct = 1;
 
   # Set your time zone.
   time.timeZone = "America/New_York";
