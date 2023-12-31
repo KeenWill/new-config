@@ -27,10 +27,11 @@ let user = "williamgoeller";
       };
       # efi.canTouchEfiVariables = true;
     };
-    initrd.availableKernelModules = [ "ahci" "xhci_pci" "ehci_pci" "megaraid_sas" "nvme" "sd_mod" "delayacct" ];
+    initrd.availableKernelModules = [ "ahci" "xhci_pci" "ehci_pci" "megaraid_sas" "nvme" "sd_mod" ];
     initrd.kernelModules = [ "dm-snapshot" ];
     kernelPackages = pkgs.linuxPackages_latest;
     kernelModules = [ "kvm-intel" ];
+    kernel.task_delayacct = 1;
     zfs.extraPools = [ "tank" ];
   };
 
