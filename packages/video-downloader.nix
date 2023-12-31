@@ -23,7 +23,7 @@ python3.pkgs.buildPythonApplication rec {
     owner = "Unrud";
     repo = "video-downloader";
     rev = "v${version}";
-    hash = "sha256-3eJQg7GAv5r0yCSj4A8k2Zhfbawzax7x4CZAyg3lU0Y=";
+    hash = "sha256-oUjswz1IK8Hr6t2yB7JCg5gUQVVnlMRoEC5gj85s7/A=";
   };
 
   propagatedBuildInputs = with python3.pkgs; [
