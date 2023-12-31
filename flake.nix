@@ -46,6 +46,9 @@
       linuxSystems = [ "x86_64-linux" "aarch64-linux" ];
       darwinSystems = [ "x86_64-darwin" "aarch64-darwin" ];
       forAllSystems = f: nixpkgs.lib.genAttrs (linuxSystems ++ darwinSystems) f;
+
+      video-downloader = pkgs.callPackage ./packages/video-downloader.nix { };
+
       devShell = system: let pkgs = nixpkgs.legacyPackages.${system}; in {
         default = with pkgs; mkShell {
           nativeBuildInputs = with pkgs; [ 
@@ -143,13 +146,13 @@
         ];
      });
 
-    colmena = {
-      meta = {
-        nixpkgs = import nixpkgs {
-          system = "x86_64-linux";
-          overlays = [];
+      colmena = {
+        meta = {
+          nixpkgs = import nixpkgs {
+            system = "x86_64-linux";
+            overlays = [];
+          };
         };
-      };
 
       # host-a = { name, nodes, pkgs, ... }: {
       #   boot.isContainer = true;
@@ -167,7 +170,14 @@
       };
     };
 
+    packages.x86_64-linux = {
+      video-downloader = video-downloader;
+    };
+
     packages.aarch64-linux = {
+
+      video-downloader = video-downloader;
+
       vmware = nixos-generators.nixosGenerate {
         system = "aarch64-linux";
         modules = self.nixosConfigurations."aarch64-linux"._module;

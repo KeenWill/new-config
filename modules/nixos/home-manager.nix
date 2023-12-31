@@ -31,10 +31,7 @@ in
     enableNixpkgsReleaseCheck = false;
     username = "${user}";
     homeDirectory = "/home/${user}";
-    packages = pkgs.callPackage ./packages.nix {} ++
-    [
-      (import ./video-downloader.nix { inherit system; })
-    ];
+    packages = pkgs.callPackage ./packages.nix {};
     file = shared-files // import ./files.nix { inherit user; };
     stateVersion = "21.05";
   };
