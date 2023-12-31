@@ -136,7 +136,7 @@ in
             PUID = puid;
             PGID = pgid;
             TZ = tz;
-            VERSION = docker;
+            VERSION = "docker";
             PLEX_CLAIM = "claim-PSHJWjkc4Sys3qNgvysr";
         };
         volumes = [ 
