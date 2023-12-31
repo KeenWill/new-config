@@ -168,13 +168,7 @@
       };
     };
 
-    packages.x86_64-linux = {
-      video-downloader = video-downloader;
-    };
-
     packages.aarch64-linux = {
-
-      video-downloader = video-downloader;
 
       vmware = nixos-generators.nixosGenerate {
         system = "aarch64-linux";
