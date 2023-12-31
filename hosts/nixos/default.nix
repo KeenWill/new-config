@@ -11,6 +11,8 @@ let user = "williamgoeller";
 
   ];
 
+  networking.firewall.allowedTCPPorts = [ 80 443 8112 6881 588436 9117 6789 8989 7878 32400 8324 32469 1900 32410 32412 32413 32414 ];
+
   # Use the systemd-boot EFI boot loader.
   boot = {
     loader = {
