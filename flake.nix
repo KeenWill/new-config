@@ -47,7 +47,6 @@
       darwinSystems = [ "x86_64-darwin" "aarch64-darwin" ];
       forAllSystems = f: nixpkgs.lib.genAttrs (linuxSystems ++ darwinSystems) f;
 
-      video-downloader = pkgs.callPackage ./packages/video-downloader.nix { };
 
       devShell = system: let pkgs = nixpkgs.legacyPackages.${system}; in {
         default = with pkgs; mkShell {
