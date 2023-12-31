@@ -347,6 +347,7 @@ let user = "williamgoeller";
   services.plex = {
     enable = true;
     openFirewall = true;
+    dataDir = "/tank/config/plex";
   };
 
   # Nginx Reverse SSL Proxy
