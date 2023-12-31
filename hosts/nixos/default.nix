@@ -1,4 +1,4 @@
-{ lib, specialArgs, config, inputs, pkgs, agenix, ... }:
+{ lib, specialArgs, config, inputs, pkgs, agenix, arion, ... }:
 
 let user = "williamgoeller";
     keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFVrWZkf6wERr0iwo4/LB2If1etVtlJRS6J3+yXdNM/a william@williamgoeller.com" ]; in
@@ -8,10 +8,22 @@ let user = "williamgoeller";
     ../../modules/nixos/disk-config.nix
     ../../modules/shared
     ../../modules/shared/cachix
-
+    arion.nixosModules.arion
   ];
 
   networking.firewall.allowedTCPPorts = [ 80 443 631 5901 8112 6881 9117 6789 8989 7878 32400 8324 32469 1900 32410 32412 32413 32414 ];
+
+  virtualisation.arion = {
+    backend = "docker"; # or "docker"
+    projects.example = {
+      serviceName = "htpc"; # optional systemd service name, defaults to arion-example in this case
+      settings = {
+        # Specify you project here, or import it from a file.
+        # NOTE: This does NOT use ./arion-pkgs.nix, but defaults to NixOS' pkgs.
+        imports = [ ./htpc.nix ];
+      };
+    };
+  };
 
   # Use the systemd-boot EFI boot loader.
   boot = {

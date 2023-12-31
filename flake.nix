@@ -39,6 +39,7 @@
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    arion.url = "github:hercules-ci/arion";
   };
   outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, nixos-generators, disko, agenix, agenix-rekey, secrets } @inputs:
     let
