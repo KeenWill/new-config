@@ -16,7 +16,7 @@
 
 python3.pkgs.buildPythonApplication rec {
   pname = "video-downloader";
-  version = "0.12.09";
+  version = "0.12.10";
   format = "other";
 
   src = fetchFromGitHub {
