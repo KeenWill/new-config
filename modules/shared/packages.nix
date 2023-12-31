@@ -24,7 +24,7 @@ with pkgs; [
   rage
   colmena
 
-  
+  iotop
 
   # Encryption and security tools
   age
