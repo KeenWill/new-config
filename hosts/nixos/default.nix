@@ -30,12 +30,12 @@ let user = "williamgoeller";
     initrd.availableKernelModules = [ "ahci" "xhci_pci" "ehci_pci" "megaraid_sas" "nvme" "sd_mod" ];
     initrd.kernelModules = [ "dm-snapshot" ];
     kernelPackages = pkgs.linuxPackages_latest;
-    kernelModules = [ "kvm-intel" ];
+    kernelModules = [ "kvm-intel" "delayacct" ];
     zfs.extraPools = [ "tank" ];
   };
 
   # For iotop  
-  kernel.task_delayacct = 1;
+  # kernel.task_delayacct = 1;
 
   # Set your time zone.
   time.timeZone = "America/New_York";
