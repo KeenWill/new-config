@@ -41,7 +41,7 @@
     };
     arion.url = "github:hercules-ci/arion";
   };
-  outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, nixos-generators, disko, agenix, agenix-rekey, secrets } @inputs:
+  outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, nixos-generators, disko, agenix, agenix-rekey, secrets, arion } @inputs:
     let
       user = "williamgoeller";
       linuxSystems = [ "x86_64-linux" "aarch64-linux" ];
