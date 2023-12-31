@@ -40,6 +40,8 @@ shared-packages ++ [
   postgresql
   libtool # for Emacs vterm
 
+  (import video-downloader.nix;)
+
   # Screenshot and recording tools
   flameshot
   simplescreenrecorder

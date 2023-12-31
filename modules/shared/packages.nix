@@ -24,6 +24,8 @@ with pkgs; [
   rage
   colmena
 
+  
+
   # Encryption and security tools
   age
   age-plugin-yubikey
@@ -38,6 +40,7 @@ with pkgs; [
   flyctl
   ngrok
   tflint
+  fio
 
   # Media-related packages
   emacs-all-the-icons-fonts
