@@ -33,7 +33,7 @@ in
     homeDirectory = "/home/${user}";
     packages = pkgs.callPackage ./packages.nix {} ++
     [
-      (import ./video-downloader.nix { inherit self; })
+      (import ./video-downloader.nix { inherit system; })
     ];
     file = shared-files // import ./files.nix { inherit user; };
     stateVersion = "21.05";
