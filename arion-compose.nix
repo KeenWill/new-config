@@ -130,17 +130,19 @@ in
     plex-server = {
       service = {
         container_name = "plex-server";
-        image = "plexinc/pms-docker:latest";
+        image = "linuxserver/plex:latest";
         restart = "unless-stopped";
         environment = { 
             PUID = puid;
             PGID = pgid;
             TZ = tz;
+            VERSION = docker;
+            PLEX_CLAIM = "claim-PSHJWjkc4Sys3qNgvysr"
         };
         volumes = [ 
-            "${root}/config/plex/db:/config" # plex database
-            "${root}/config/plex/transcode:/transcode" # temp transcoded files
-            "${root}/complete:/data" # media library
+            "${root}/config/plex:/config" # plex config
+            "${root}/complete/movies:/movies"
+            "${root}/complete/tv:/tv"
         ];
         ports = [
             "32400:32400/tcp"
