@@ -154,7 +154,7 @@ let user = "williamgoeller";
 
     # Let's be able to SSH into this machine
     openssh.enable = true;
-    openssh.forwardX11 = true;
+    openssh.settings.X11Forwarding = true;
 
     # Sync state between machines
     # Sync state between machines
