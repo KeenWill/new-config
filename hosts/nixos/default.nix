@@ -11,7 +11,7 @@ let user = "williamgoeller";
 
   ];
 
-  networking.firewall.allowedTCPPorts = [ 80 443 8112 6881 9117 6789 8989 7878 32400 8324 32469 1900 32410 32412 32413 32414 ];
+  networking.firewall.allowedTCPPorts = [ 80 443 631 5901 8112 6881 9117 6789 8989 7878 32400 8324 32469 1900 32410 32412 32413 32414 ];
 
   # Use the systemd-boot EFI boot loader.
   boot = {
@@ -154,6 +154,7 @@ let user = "williamgoeller";
 
     # Let's be able to SSH into this machine
     openssh.enable = true;
+    openssh.forwardX11 = true;
 
     # Sync state between machines
     # Sync state between machines
