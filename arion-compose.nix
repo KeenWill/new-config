@@ -137,7 +137,7 @@ in
             PGID = pgid;
             TZ = tz;
             VERSION = "docker";
-            PLEX_CLAIM = "claim-PSHJWjkc4Sys3qNgvysr";
+            PLEX_CLAIM = "claim-fUUAqeFd8wPgy73c1M1Y";
         };
         volumes = [ 
             "${root}/config/plex:/config" # plex config
