@@ -4,6 +4,8 @@ with pkgs;
 let shared-packages = import ../shared/packages.nix { inherit pkgs; }; in
 shared-packages ++ [
 
+  arion
+
   # Security and authentication
   yubikey-manager-qt
   yubikey-agent
@@ -39,7 +41,7 @@ shared-packages ++ [
   rnix-lsp # lsp-mode for nix
   postgresql
   libtool # for Emacs vterm
-  
+
   # Screenshot and recording tools
   flameshot
   simplescreenrecorder
