@@ -5,6 +5,7 @@ let shared-packages = import ../shared/packages.nix { inherit pkgs; }; in
 shared-packages ++ [
 
   arion
+  jdupes
 
   # Security and authentication
   yubikey-manager-qt
