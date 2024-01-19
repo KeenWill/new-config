@@ -62,29 +62,31 @@
         };
       };
 
-      opamShell = system: let pkgs = nixpkgs.legacyPackages.${system}; in {
-        default = with pkgs; mkShell {
-          nativeBuildInputs = with pkgs.ocamlPackages; [ 
-            dune_2
-            utop
-            merlin
-            ocamlformat
-            ocaml-lsp-server
-            base 
-            core
-            core_unix
-            async_unix 
-            async
-            bashInteractive 
-            git 
-            age 
-            agenix-rekey.packages.${system}.agenix-rekey
-          age-plugin-yubikey ];
-          shellHook = with pkgs; ''
-            export EDITOR=vim
-          '';
-        };
-      };
+      devShells = {
+        opamShell = system: let pkgs = nixpkgs.legacyPackages.${system}; in {
+          default = with pkgs; mkShell {
+            nativeBuildInputs = with pkgs.ocamlPackages; [ 
+              dune_2
+              utop
+              merlin
+              ocamlformat
+              ocaml-lsp-server
+              base 
+              core
+              core_unix
+              async_unix 
+              async
+              bashInteractive 
+              git 
+              age 
+              agenix-rekey.packages.${system}.agenix-rekey
+            age-plugin-yubikey ];
+            shellHook = with pkgs; ''
+              export EDITOR=vim
+            '';
+          };
+        };     
+      };       
 
       mkApp = scriptName: system: {
         type = "app";
