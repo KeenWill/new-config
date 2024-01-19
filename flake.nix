@@ -114,7 +114,7 @@
       };
     in
     {
-      devShells = forAllSystems devShell;
+      devShells = forAllSystems mkDevShells;
       apps = nixpkgs.lib.genAttrs linuxSystems mkLinuxApps // nixpkgs.lib.genAttrs darwinSystems mkDarwinApps;
 
       agenix-rekey = agenix-rekey.configure {
