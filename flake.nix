@@ -55,7 +55,6 @@
             utop
             merlin
             ocamlformat
-            ocaml-lsp-server
             base 
             core
             core_unix
