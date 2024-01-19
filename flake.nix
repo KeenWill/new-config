@@ -48,8 +48,30 @@
       darwinSystems = [ "x86_64-darwin" "aarch64-darwin" ];
       forAllSystems = f: nixpkgs.lib.genAttrs (linuxSystems ++ darwinSystems) f;
 
-      devShell = system: let pkgs = nixpkgs.legacyPackages.${system}; in {
-        default = with pkgs; mkShell {
+      mkDevShells = system: let pkgs = nixpkgs.legacyPackages.${system}; in {
+        opamShell = with pkgs; mkShell {
+          nativeBuildInputs = with pkgs.ocamlPackages; [ 
+            dune_2
+            utop
+            merlin
+            ocamlformat
+            ocaml-lsp-server
+            base 
+            core
+            core_unix
+            async_unix 
+            async
+            bashInteractive 
+            git 
+            age 
+            agenix-rekey.packages.${system}.agenix-rekey
+          age-plugin-yubikey ];
+          shellHook = with pkgs; ''
+            export EDITOR=vim
+          '';
+        };
+
+        nixosConfig = with pkgs; mkShell {
           nativeBuildInputs = with pkgs; [ 
             bashInteractive 
             git 
@@ -62,37 +84,7 @@
         };
       };
 
-      flake-utils.lib.eachDefaultSystem (system:
-        let 
-          pkgs = nixpkgs.legacyPackages.${system};
-        in {
-          devShells = {
-            opamShell = system: let pkgs = nixpkgs.legacyPackages.${system}; in {
-              default = with pkgs; mkShell {
-                nativeBuildInputs = with pkgs.ocamlPackages; [ 
-                  dune_2
-                  utop
-                  merlin
-                  ocamlformat
-                  ocaml-lsp-server
-                  base 
-                  core
-                  core_unix
-                  async_unix 
-                  async
-                  bashInteractive 
-                  git 
-                  age 
-                  agenix-rekey.packages.${system}.agenix-rekey
-                age-plugin-yubikey ];
-                shellHook = with pkgs; ''
-                  export EDITOR=vim
-                '';
-              };
-            };     
-          };    
-        }
-      );   
+         
 
       mkApp = scriptName: system: {
         type = "app";
