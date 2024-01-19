@@ -26,6 +26,8 @@ with pkgs; [
 
   iotop
 
+  opam
+
   # Encryption and security tools
   age
   age-plugin-yubikey
