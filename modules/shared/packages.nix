@@ -28,6 +28,7 @@ with pkgs; [
 
   opam
   fdupes
+  fclones
 
   # Encryption and security tools
   age
