@@ -27,6 +27,7 @@ with pkgs; [
   iotop
 
   opam
+  fdupes
 
   # Encryption and security tools
   age
