@@ -11,7 +11,7 @@ let user = "williamgoeller";
     arion.nixosModules.arion
   ];
 
-  networking.firewall.allowedTCPPorts = [ 80 443 631 5901 8112 6881 9117 6789 8989 7878 32400 8324 32469 1900 32410 32412 32413 32414 ];
+  networking.firewall.allowedTCPPorts = [ 80 443 631 5901 8112 6881 9117 6789 8888 8080 8989 7878 32400 8324 32469 1900 32410 32412 32413 32414 ];
 
   virtualisation.arion = {
     backend = "docker"; # or "docker"
