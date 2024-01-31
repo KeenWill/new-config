@@ -388,10 +388,12 @@ let user = "williamgoeller";
     acceptTerms = true;
     defaults.email = "foo@bar.com";
   };
-  
+
   # Nginx Reverse SSL Proxy
   services.nginx = {
     enable = true;
+    recommendedProxySettings = true;
+    recommendedTlsSettings = true;
     # give a name to the virtual host. It also becomes the server name.
     virtualHosts."wkg1" = {
       # Since we want a secure connection, we force SSL
@@ -399,6 +401,8 @@ let user = "williamgoeller";
 
       # http2 can more performant for streaming: https://blog.cloudflare.com/introducing-http2/
       http2 = true;
+
+      enableACME = true;
 
       # Provide the ssl cert and key for the vhost
       # sslCertificate = "/https-cert.pem";
@@ -460,16 +464,12 @@ let user = "williamgoeller";
       #   proxy_redirect off;
       #   proxy_buffering off;
       # '';
-      recommendedProxySettings = true;
-      recommendedTlsSettings = true;
+
       locations."/" = {
         proxyPass = "http://localhost:32400/";
-        enableACME = true;
-
       };
       locations."/jupyter" = {
         proxyPass = "http://localhost:8888/";
-        enableACME = true;
       };
     };
   };
