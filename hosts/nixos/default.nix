@@ -13,6 +13,26 @@ let user = "williamgoeller";
 
   networking.firewall.allowedTCPPorts = [ 80 443 631 5901 8112 6881 9117 6789 8888 8080 8989 7878 32400 8324 32469 1900 32410 32412 32413 32414 ];
 
+  services.nginx.enable = true;
+  services.nginx.virtualHosts."wkg1" = {
+      addSSL = true;
+      enableACME = true;
+      locations."/jupyter" = {
+        proxyPass = "http://127.0.0.1:8888";
+        proxyWebsockets = true; # needed if you need to use WebSocket
+        extraConfig =
+          # required when the target is also TLS server with multiple hosts
+          "proxy_ssl_server_name on;" +
+          # required when the server wants to use HTTP Authentication
+          "proxy_pass_header Authorization;"
+          ;
+      };
+  };
+  security.acme = {
+    acceptTerms = true;
+    defaults.email = "william@williamgoeller.com";
+  };
+
   virtualisation.arion = {
     backend = "docker"; # or "docker"
     projects.example = {
